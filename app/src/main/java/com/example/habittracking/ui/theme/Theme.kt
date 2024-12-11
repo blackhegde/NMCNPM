@@ -10,6 +10,32 @@ import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.material3.Typography
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.sp
+import com.example.habittracking.R
+
+
+val NunitoFontFamily = FontFamily(
+    Font(R.font.nunito_regular, FontWeight.Normal),
+    Font(R.font.nunito_bold, FontWeight.Bold)
+)
+
+val HabitTrackingTypography = Typography(
+    headlineLarge = TextStyle(
+        fontFamily = NunitoFontFamily,
+        fontWeight = FontWeight.Bold,
+        fontSize = 30.sp
+    ),
+    bodyLarge = TextStyle(
+        fontFamily = NunitoFontFamily,
+        fontWeight = FontWeight.Normal,
+        fontSize = 16.sp
+    )
+)
 
 private val DarkColorScheme = darkColorScheme(
     primary = Purple80,
@@ -52,7 +78,7 @@ fun HabitTrackingTheme(
 
     MaterialTheme(
         colorScheme = colorScheme,
-        typography = Typography,
+        typography = HabitTrackingTypography,
         content = content
     )
 }
