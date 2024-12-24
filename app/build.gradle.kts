@@ -56,11 +56,10 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
-
-//    implementation 'org.maplibre.gl:android-sdk:10.14.1'
-
 }
+
 dependencies {
     implementation ("androidx.compose.material3:material3:1.1.1")// Phiên bản mới nhất
     implementation ("androidx.compose.ui:ui-text:1.5.0") // Hỗ trợ font tùy chỉnh
+    implementation ("androidx.navigation:navigation-compose:2.7.3") // Hoặc phiên bản mới nhất
 }
