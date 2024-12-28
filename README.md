@@ -1,2 +1,0 @@
-# NMCNPM
-NMCNPM project
