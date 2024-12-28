@@ -1,4 +1,4 @@
-package com.example.habittracking
+package com.example.layout
 
 import org.junit.Test
 

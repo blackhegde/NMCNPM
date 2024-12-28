@@ -5,13 +5,13 @@ plugins {
 }
 
 android {
-    namespace = "com.example.habittracking"
+    namespace = "com.example.layout"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.habittracking"
-        minSdk = 25
-        targetSdk = 35
+        applicationId = "com.example.layout"
+        minSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
@@ -33,6 +33,7 @@ android {
     }
     kotlinOptions {
         jvmTarget = "11"
+        // thêm dòng này để sử dụng viewbinding
         buildFeatures {
             viewBinding = true
         }
