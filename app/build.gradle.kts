@@ -52,4 +52,10 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    // implementation OSM
+    implementation("org.osmdroid:osmdroid-android:6.1.14")
+    implementation ("com.google.android.gms:play-services-location:21.0.1")
+
+
+
 }
