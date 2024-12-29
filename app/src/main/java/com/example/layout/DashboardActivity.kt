@@ -154,9 +154,6 @@ class DashboardActivity : AppCompatActivity() {
 
         // Cập nhật Polyline với danh sách điểm
         polyline.setPoints(points)
-        if (points.size % 5 == 0) { // Chỉ làm mới sau mỗi 5 điểm
-            mapView.invalidate()
-        }
         mapView.invalidate() // Làm mới MapView
         lastLocation = newPoint // Cập nhật lastLocation
     }

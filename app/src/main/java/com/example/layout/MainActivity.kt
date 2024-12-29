@@ -4,7 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageButton
-import android.widget.TextView
+import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
@@ -46,25 +47,44 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
     private fun showModeSelectionDialog() {
-        // Hiển thị Popup để chọn chế độ
-        val modes = arrayOf("Chạy Bộ", "Đạp Xe", "Đi Bộ")
-        AlertDialog.Builder(this)
-            .setTitle("Chọn chế độ")
-            .setItems(modes) { _, which ->
-                val selectedMode = modes[which]
-                startDashboard(selectedMode)
-            }
-            .setNegativeButton("Hủy") { dialog, _ ->
-                dialog.dismiss()
-            }
+        // Inflate layout tùy chỉnh
+        val dialogView = layoutInflater.inflate(R.layout.dialog_mode_selection, null)
+
+        // Tạo AlertDialog
+        val dialog = AlertDialog.Builder(this)
+            .setView(dialogView)
+            .setCancelable(true)
             .create()
-            .show()
+
+        // Kết nối các tùy chọn với sự kiện nhấn
+        val optionRun = dialogView.findViewById<LinearLayout>(R.id.option_run)
+        val optionBicycle = dialogView.findViewById<LinearLayout>(R.id.option_bicycle)
+        val optionWalk = dialogView.findViewById<LinearLayout>(R.id.option_walk)
+
+        optionRun.setOnClickListener {
+            dialog.dismiss()
+            startDashboard("Chạy Bộ")
+        }
+
+        optionBicycle.setOnClickListener {
+            dialog.dismiss()
+            startDashboard("Đạp Xe")
+        }
+
+        optionWalk.setOnClickListener {
+            dialog.dismiss()
+            startDashboard("Đi Bộ")
+        }
+
+        // Hiển thị Dialog
+        dialog.show()
     }
 
-    private fun startDashboard(selectedMode: String) {
+    private fun startDashboard(mode: String) {
         val intent = Intent(this, DashboardActivity::class.java)
-        intent.putExtra("mode", selectedMode) // Gửi chế độ đã chọn sang DashboardActivity
+        intent.putExtra("mode", mode) // Gửi chế độ đã chọn sang DashboardActivity
         startActivity(intent)
     }
 }
