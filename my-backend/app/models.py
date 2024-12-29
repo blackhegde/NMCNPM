@@ -12,6 +12,8 @@ class User(db.Model):
     streak = db.relationship('Streak', backref='user', uselist=False, lazy=True)
     # 1-N achivement
     achievements = db.relationship('Achievement', backref='user', lazy=True)
+    # 1-N ranking
+    rank = db.relationship('Ranking', backref='user', lazy=True)
 
 class Activity(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -38,3 +40,9 @@ class Achievement(db.Model):
     name = db.Column(db.String(100), nullable=False)
     achieved_on = db.Column(db.DateTime, nullable=False)
     description = db.Column(db.Text)
+
+class Ranking(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    rank_type = db.Column(db.String(50), nullable=False)
+    position = db.Column(db.Integer)
