@@ -1,11 +1,14 @@
 from flask import Flask
 from flask_cors import CORS
-from .routes import setup_routes
+from flask_sqlalchemy import SQLAlchemy
+from config import app_config
+# from .routes import setup_routes
 # from dotenv import load_dotenv
 
-def create_app():
-    app = Flask(__name__)
-    app.config.from_object('config.Config')
-    CORS(app)  # Cho phép CORS
-    setup_routes(app)
-    return app
+app = Flask(__name__)
+app.config.from_object(app_config['develop_config'])
+CORS(app)  # Cho phép CORS
+db = SQLAlchemy(app)
+
+# setup_routes(app)
+from app import routes

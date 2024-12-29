@@ -34,6 +34,7 @@ def get_activities(user_id):
     } for a in activities])
 
 #update streak
+@app.route('/api/streak', methods=['POST'])
 def update_streak():
     data = request.json
     user_id = data['user_id']
