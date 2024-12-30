@@ -59,29 +59,43 @@
 
         <ImageButton
             android:id="@+id/btnRank"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:scaleType="centerCrop"
+            android:background="@null"
             android:contentDescription="Xếp hạng"
+            android:padding="5dp"
+            android:scaleType="centerInside"
             app:srcCompat="@drawable/rank" />
 
-        <ImageButton
+
+        <Button
             android:id="@+id/btnStart"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:contentDescription="Bắt đầu"
-            android:scaleType="centerCrop"
-            app:srcCompat="@drawable/start" />
+            android:backgroundTint="@color/colorOrange"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:padding="0dp"
+            android:paddingTop="0dp"
+            android:paddingBottom="0dp"
+            android:text="Bắt đầu"
+            android:textSize="20sp"
+            app:cornerRadius="0dp"
+            app:iconPadding="0dp" />
+        <!--            android:scaleType="centerCrop"-->
+        <!--            app:srcCompat="@drawable/start" />-->
 
         <ImageButton
             android:id="@+id/btnStatistic"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="@null"
             android:contentDescription="Thống kê"
-            android:scaleType="centerCrop"
+            android:padding="5dp"
+            android:scaleType="centerInside"
             app:srcCompat="@drawable/statistic" />
     </LinearLayout>
 </LinearLayout>
