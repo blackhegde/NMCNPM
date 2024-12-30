@@ -99,7 +99,7 @@ def signup():
     return jsonify({"message": "Sign up successfully"}), 201
 
 #lay thong tin streak cua mot user
-@app.route('api/streak/<int:user_id>', methods=['GET'])
+@app.route('/api/streak/<int:user_id>', methods=['GET'])
 def get_streak(user_id):
     streak = Streak.query.filter_by(Streak.user_id)
     return jsonify({
