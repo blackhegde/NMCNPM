@@ -73,7 +73,6 @@
             android:layout_weight="1"
             android:contentDescription="Bắt đầu"
             android:scaleType="centerCrop"
-
             app:srcCompat="@drawable/start" />
 
         <ImageButton

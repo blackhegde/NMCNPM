@@ -11,8 +11,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/design_default_color_secondary_variant"
         android:orientation="horizontal"
-        android:padding="16dp">
+        android:padding="8dp"
+        android:elevation="4dp">
 
         <!-- Nút Home -->
         <ImageButton
@@ -20,8 +22,10 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:src="@drawable/ic_launcher_foreground"
-            android:contentDescription="Home"/>
+            android:contentDescription="Home"
+            android:scaleType="centerCrop"
+            android:padding="5dp"
+            android:src="@drawable/home" />
 
         <!-- Text User -->
         <TextView
@@ -29,17 +33,17 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="16dp"
-            android:text="User"
+            android:text="USER"
+            android:textColor="@color/white"
             android:textSize="26sp"
             android:textStyle="bold" />
     </LinearLayout>
 
     <!-- Thông tin người dùng -->
 
-    <!-- Thanh tiêu đề dưới -->
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="186dp"
+        android:layout_height="500dp"
         android:orientation="vertical"
         android:padding="16dp">
 
@@ -80,104 +84,334 @@
             </LinearLayout>
         </LinearLayout>
 
-        <!-- Các chỉ số đã đạt được -->
+        <ScrollView
+            android:layout_width="340dp"
+            android:layout_height="80dp">
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <!-- Tiêu đề -->
+                <TextView
+                    android:id="@+id/tvOverviewTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:gravity="center"
+                    android:text="Overall"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <!-- Khung Tổng Quan -->
+                <GridLayout
+                    android:id="@+id/gridOverview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:columnCount="2"
+                    android:padding="8dp"
+                    android:rowCount="2">
+
+                    <!-- Mục 1: Số ngày hoạt động -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_columnWeight="1"
+                        android:layout_margin="8dp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/imgActiveDays"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:contentDescription="Số ngày hoạt động"
+                            android:src="@drawable/streak" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tvActiveDaysLabel"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="Ngày:"
+                                android:textSize="14sp" />
+
+                            <TextView
+                                android:id="@+id/tvActiveDays"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="4dp"
+                                android:gravity="center"
+                                android:text="15"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Mục 2: Quãng đường di chuyển -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_columnWeight="1"
+                        android:layout_margin="8dp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/imgDistance"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:contentDescription="Quãng đường di chuyển"
+                            android:src="@drawable/coqd" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tvDistanceLabel"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="Quãng đường:"
+                                android:textSize="14sp" />
+
+                            <TextView
+                                android:id="@+id/tvDistance"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="4dp"
+                                android:gravity="center"
+                                android:text="50 km"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Mục 3: Xếp hạng -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_columnWeight="1"
+                        android:layout_margin="8dp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/imgRank"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:contentDescription="Xếp hạng"
+                            android:src="@drawable/silver" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tvRankLabel"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="Hạng:"
+                                android:textSize="14sp" />
+
+                            <TextView
+                                android:id="@+id/tvRank"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="4dp"
+                                android:gravity="center"
+                                android:text="5"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Mục 4: Số lần in top -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_columnWeight="1"
+                        android:layout_margin="8dp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/imgTopCount"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:contentDescription="Số lần in top"
+                            android:src="@drawable/rank_medal" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tvTopCountLabel"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="Top:"
+                                android:textSize="14sp" />
+
+                            <TextView
+                                android:id="@+id/tvTopCount"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="4dp"
+                                android:gravity="center"
+                                android:text="3"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </GridLayout>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="380dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <!-- Text: Hoạt động -->
+                <TextView
+                    android:id="@+id/activityText"
+                    android:layout_width="348dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Hoạt động"
+                    android:textColor="#000000"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <!-- Ảnh hoạt động -->
+                <ImageView
+                    android:id="@+id/viewactivity"
+                    android:layout_width="364dp"
+                    android:layout_height="132dp"
+                    android:layout_marginTop="8dp"
+                    android:contentDescription="Ảnh hoạt động"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_launcher_background" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="380dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <!-- Text: Hoạt động -->
+                <TextView
+                    android:id="@+id/achiverment"
+                    android:layout_width="348dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Achiverment"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <!-- Ảnh hoạt động -->
+                <ImageView
+                    android:id="@+id/viewachiverment"
+                    android:layout_width="364dp"
+                    android:layout_height="132dp"
+                    android:layout_marginTop="8dp"
+                    android:contentDescription="Ảnh hoạt động"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_launcher_background" />
+            </LinearLayout>
+
+        </ScrollView>
+
         <LinearLayout
-            android:layout_width="379dp"
-            android:layout_height="450dp"
-            android:layout_marginTop="24dp"
-            android:orientation="vertical">
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:background="@color/design_default_color_on_primary"
+            android:gravity="center"
+            android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/achievementTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:text="Achievements"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+            <!-- Icon Bảng xếp hạng -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
 
-            <TextView
-                android:id="@+id/achievementTrack"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Track: 15 km"
-                android:textSize="14sp" />
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="Leaderboard Icon"
+                    android:src="@drawable/rank" />
 
-            <TextView
-                android:id="@+id/achievementDays"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Days: 10"
-                android:textSize="14sp" />
+            </LinearLayout>
+
+            <!-- Nút Start -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="START"
+                    android:textSize="26dp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <!-- Icon Thông tin cá nhân -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="Personal Info Icon"
+                    android:src="@drawable/statistic" />
+
+
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:orientation="horizontal"
-        android:background="@color/design_default_color_on_primary"
-        android:gravity="center">
-
-        <!-- Icon Bảng xếp hạng -->
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:clickable="true"
-            android:focusable="true"
-            android:padding="8dp">
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:contentDescription="Leaderboard Icon"
-                android:src="@drawable/ic_launcher_foreground" />
-
-        </LinearLayout>
-
-        <!-- Nút Start -->
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:clickable="true"
-            android:focusable="true"
-            android:padding="8dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="START"
-                android:textSize="26dp"
-                android:textStyle="bold" />
-
-        </LinearLayout>
-
-        <!-- Icon Thông tin cá nhân -->
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:clickable="true"
-            android:focusable="true"
-            android:padding="8dp">
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@drawable/ic_launcher_foreground"
-                android:contentDescription="Personal Info Icon" />
-
-
-        </LinearLayout>
-    </LinearLayout>
-
 </LinearLayout>
