@@ -1,4 +1,6 @@
+from calendar import monthrange
 from flask import request, jsonify
+from sqlalchemy import func
 from app import app, db
 from app.models import Activity, Streak, Achievement, User, MonthlySummary
 from datetime import datetime, timedelta
@@ -153,8 +155,8 @@ def get_monthlymonthly_leaderboard() :
     })
     
 #lay top 50 streak
-    @app.route('/api/streak/top', methods=['GET'])
-    def get_top_streaks():
+@app.route('/api/streak/top', methods=['GET'])
+def get_top_streaks():
     top_streaks = (
         db.session.query(
             Streak.user_id,
@@ -222,7 +224,7 @@ def create_monthly_summary():
             total_activities=total_activities,
             streak_days=streak_days
         )
-        db.session.add(mothly_summary)
+        db.session.add(monthly_summary)
     
     # lưu các thay đổi vào db
     db.session.commit()
@@ -230,7 +232,7 @@ def create_monthly_summary():
     return jsonify({"message": "Monthly summaries created successfully!"}), 201
 
 # Achievement
-@app.route('/api/achievement', methods=['POST']')
+@app.route('/api/achievement', methods=['POST'])
 def create_achievement():
     data = request.json
     user_id = data['user_id']

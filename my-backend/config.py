@@ -7,4 +7,4 @@ class Config:
 
 app_config = {
     'develop_config': Config
-}
+} 
