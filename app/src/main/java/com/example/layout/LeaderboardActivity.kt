@@ -1,7 +1,10 @@
 package com.example.layout
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageButton
+import android.widget.LinearLayout
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -48,5 +51,49 @@ class LeaderboardActivity : AppCompatActivity() {
         btnhome.setOnClickListener{
             finish()
         }
+
+        // Xử lý sự kiện nhấn nút Start
+        val btnStart = findViewById<ImageButton>(R.id.btnStart)
+        btnStart.setOnClickListener {
+            showModeSelectionDialog()
+        }
+    }
+    private fun showModeSelectionDialog() {
+        // Inflate layout tùy chỉnh
+        val dialogView = layoutInflater.inflate(R.layout.dialog_mode_selection, null)
+
+        // Tạo AlertDialog
+        val dialog = AlertDialog.Builder(this)
+            .setView(dialogView)
+            .setCancelable(true)
+            .create()
+
+        // Kết nối các tùy chọn với sự kiện nhấn
+        val optionRun = dialogView.findViewById<LinearLayout>(R.id.option_run)
+        val optionBicycle = dialogView.findViewById<LinearLayout>(R.id.option_bicycle)
+        val optionWalk = dialogView.findViewById<LinearLayout>(R.id.option_walk)
+
+        optionRun.setOnClickListener {
+            dialog.dismiss()
+            startDashboard("Chạy Bộ")
+        }
+
+        optionBicycle.setOnClickListener {
+            dialog.dismiss()
+            startDashboard("Đạp Xe")
+        }
+
+        optionWalk.setOnClickListener {
+            dialog.dismiss()
+            startDashboard("Đi Bộ")
+        }
+
+        // Hiển thị Dialog
+        dialog.show()
+    }
+    private fun startDashboard(mode: String) {
+        val intent = Intent(this, DashboardActivity::class.java)
+        intent.putExtra("mode", mode) // Gửi chế độ đã chọn sang DashboardActivity
+        startActivity(intent)
     }
 }
