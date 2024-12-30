@@ -22,8 +22,9 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="Home"
-            android:src="@drawable/home" />
+            android:src="@drawable/home"
+            android:scaleType="centerCrop"
+            android:contentDescription="Home"/>
 
         <!-- Text User -->
         <TextView
@@ -84,10 +85,11 @@
         </LinearLayout>
 
         <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingTop="16dp">
+            android:padding="16dp">
 
             <!-- Tiêu đề -->
             <TextView
@@ -98,8 +100,8 @@
                 android:layout_marginBottom="10dp"
                 android:gravity="center"
                 android:text="OVERALL"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:textSize="18sp" />
 
             <!-- Khung Tổng Quan -->
             <GridLayout
