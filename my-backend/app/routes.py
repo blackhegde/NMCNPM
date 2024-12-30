@@ -38,7 +38,7 @@ def get_activities(user_id):
     } for activity in activities])
 
 #Get 50 recent activities
-@app.route('/api/activities/recent', method=['GET'])
+@app.route('/api/activities/recent', methods=['GET'])
 def get_recent_activities():
     recent_activities = Activity.query.order_by(Activity.start_time.desc()).limit(50).all()
 
@@ -86,7 +86,7 @@ def update_streak():
     return jsonify({'message': 'Streak updated successfully', 'streak_days': streak.streak_days}), 200
 
 #dang ky nguoi dung moi
-@app.route('/api/user', method=['POST'])
+@app.route('/api/user', methods=['POST'])
 def signup():
     data = request.json
     new_user = User(
@@ -99,7 +99,7 @@ def signup():
     return jsonify({"message": "Sign up successfully"}), 201
 
 #lay thong tin streak cua mot user
-@app.route('api/streak/<int:user_id>', method=['GET'])
+@app.route('api/streak/<int:user_id>', methods=['GET'])
 def get_streak(user_id):
     streak = Streak.query.filter_by(Streak.user_id)
     return jsonify({
