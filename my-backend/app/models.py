@@ -39,9 +39,3 @@ class Achievement(db.Model):
     name = db.Column(db.String(100), nullable=False)
     achieved_on = db.Column(db.DateTime, nullable=False)
     description = db.Column(db.Text)
-
-class Ranking(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    rank_type = db.Column(db.String(50), nullable=False)
-    position = db.Column(db.Integer)
