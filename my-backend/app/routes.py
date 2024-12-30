@@ -2,7 +2,7 @@ from calendar import monthrange
 from flask import request, jsonify
 from sqlalchemy import func
 from app import app, db
-from app.models import Activity, Streak, Achievement, User, MonthlySummary
+from app.models import Activity, Streak, Achievement, User
 from datetime import datetime, timedelta
 
 
@@ -186,50 +186,50 @@ def get_top_streaks():
         'top_streaks': streaks_data
     })
 
-#tong ket hang thang cua user
-@app.route('/api/monthly_summary', methods=['POST'])
-def create_monthly_summary():
-    data = request.json
-    year = data['year']
-    month = data['month']
+# #tong ket hang thang cua user
+# @app.route('/api/monthly_summary', methods=['POST'])
+# def create_monthly_summary():
+#     data = request.json
+#     year = data['year']
+#     month = data['month']
 
-    users = User.query.all() #lay tat ca user
-    for user in users:
-        #lay all hd cua user trong thang do
-        start_of_month = datetime(year, month, 1)
-        end_of_month = datetime(year, month, 1) + timedelta(days=31)
-        end_of_month = end_of_month.replace(day=1) - timedelta(days=1)  # Điều chỉnh về ngày cuối tháng
+#     users = User.query.all() #lay tat ca user
+#     for user in users:
+#         #lay all hd cua user trong thang do
+#         start_of_month = datetime(year, month, 1)
+#         end_of_month = datetime(year, month, 1) + timedelta(days=31)
+#         end_of_month = end_of_month.replace(day=1) - timedelta(days=1)  # Điều chỉnh về ngày cuối tháng
 
-        activities = Activity.query.filter(
-            Activity.user_id == user.id,
-            Activity.start_time >= start_of_month,
-            Activity.start_time <= end_of_month
-        ).all()    
+#         activities = Activity.query.filter(
+#             Activity.user_id == user.id,
+#             Activity.start_time >= start_of_month,
+#             Activity.start_time <= end_of_month
+#         ).all()    
         
-        # tinh total dis, dura, so activ
-        total_distance = sum([activity.distance for activity in activities])
-        total_duration = sum([activity.duration for activity in activities])
-        total_activities = len(activities)
+#         # tinh total dis, dura, so activ
+#         total_distance = sum([activity.distance for activity in activities])
+#         total_duration = sum([activity.duration for activity in activities])
+#         total_activities = len(activities)
         
-        #tinh streak
-        streak = Streak.query.filter_by(user_id=user.id).first()
-        streak_days = streak.streak_days if streak else 0
+#         #tinh streak
+#         streak = Streak.query.filter_by(user_id=user.id).first()
+#         streak_days = streak.streak_days if streak else 0
         
-        #tao ban ghi tong ket cho user
-        monthly_summary = MonthlySummary(
-            user_id = user.id,
-            month = month,
-            total_distance=total_distance,
-            total_duration=total_duration,
-            total_activities=total_activities,
-            streak_days=streak_days
-        )
-        db.session.add(monthly_summary)
+#         #tao ban ghi tong ket cho user
+#         monthly_summary = MonthlySummary(
+#             user_id = user.id,
+#             month = month,
+#             total_distance=total_distance,
+#             total_duration=total_duration,
+#             total_activities=total_activities,
+#             streak_days=streak_days
+#         )
+#         db.session.add(monthly_summary)
     
-    # lưu các thay đổi vào db
-    db.session.commit()
+#     # lưu các thay đổi vào db
+#     db.session.commit()
     
-    return jsonify({"message": "Monthly summaries created successfully!"}), 201
+#     return jsonify({"message": "Monthly summaries created successfully!"}), 201
 
 # Achievement
 @app.route('/api/achievement', methods=['POST'])
