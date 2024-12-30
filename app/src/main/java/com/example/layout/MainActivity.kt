@@ -8,6 +8,8 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
@@ -45,6 +47,33 @@ class MainActivity : AppCompatActivity() {
             btnStart.setOnClickListener {
                 showModeSelectionDialog()
             }
+
+            val btnRank: ImageButton = findViewById(R.id.btnRank)
+
+            btnRank.setOnClickListener {
+                val intent = Intent(this, LeaderboardActivity::class.java)
+                startActivity(intent)
+            }
+
+        }
+        val userList = listOf(
+            UserStatus(R.drawable.ic_launcher_foreground, "John Doe", "123 Main Street", "5 km", "6'00\"", "30 mins", R.drawable.ic_launcher_background),
+            UserStatus(R.drawable.ic_launcher_foreground, "Jane Smith", "456 Elm Street", "8 km", "5'45\"", "45 mins", R.drawable.ic_launcher_background),
+            UserStatus(R.drawable.ic_launcher_foreground, "Jane Phanh", "456 Elm Street", "8 km", "5'45\"", "45 mins", R.drawable.ic_launcher_background),
+            UserStatus(R.drawable.ic_launcher_foreground, "Sơn Smith", "456 Elm Street", "8 km", "5'45\"", "45 mins", R.drawable.ic_launcher_background),
+            UserStatus(R.drawable.ic_launcher_foreground, "Jane Hoa", "456 Elm Street", "8 km", "5'45\"", "45 mins", R.drawable.ic_launcher_background)
+        )
+
+        // Thiết lập RecyclerView
+        val recyclerView: RecyclerView = findViewById(R.id.recyclerView_runnerstatus)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.adapter = MainAdapter(userList)
+
+        val btnStatistics : ImageButton = findViewById(R.id.btnStatistic)
+
+        btnStatistics.setOnClickListener {
+            val intent = Intent(this, UserActivity::class.java)
+            startActivity(intent)
         }
     }
 

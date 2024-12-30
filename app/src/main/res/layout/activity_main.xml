@@ -34,7 +34,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             app:srcCompat="@drawable/notification" />
-        //nút đăng xuất
 
         <Button
             android:id="@+id/btnLogout"
@@ -45,27 +44,13 @@
             android:text="Đăng xuất" />
     </LinearLayout>
 
-    <LinearLayout
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView_runnerstatus"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="match_parent"
-            android:layout_height="116dp"
-            android:text="TextView" />
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_weight="1"
-        android:gravity="center"
-        android:text="Nội dung ở trên"
-        android:textSize="18sp" />
-
+        android:padding="8dp"
+        android:scrollbars="vertical" />
 
     <LinearLayout
         android:layout_width="match_parent"
