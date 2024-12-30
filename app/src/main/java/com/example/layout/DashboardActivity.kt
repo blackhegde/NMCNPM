@@ -7,6 +7,7 @@ import android.os.Handler
 import android.os.Looper
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -19,6 +20,7 @@ import org.osmdroid.views.overlay.Marker
 import org.osmdroid.views.overlay.Polyline
 import kotlin.math.sqrt
 
+@Suppress("DEPRECATION")
 class DashboardActivity : AppCompatActivity() {
 
     private lateinit var mapView: MapView
@@ -31,6 +33,8 @@ class DashboardActivity : AppCompatActivity() {
     private var totalDistance = 0.0 // Tổng quãng đường đã chạy (km)
     private var lastLocation: GeoPoint? = null // Lưu vị trí cuối cùng
     private val points: MutableList<GeoPoint> = mutableListOf() // Lưu danh sách các điểm
+
+    private var currentMarker: Marker? = null // Quản lý Marker hiện tại
 
     // FusedLocationProviderClient
     private lateinit var fusedLocationClient: FusedLocationProviderClient
@@ -60,8 +64,8 @@ class DashboardActivity : AppCompatActivity() {
 
         // Tạo Polyline cho đường đi
         polyline = Polyline()
-        polyline.color = android.graphics.Color.BLUE // Màu của đường
-        polyline.width = 5.0f // Độ dày của đường
+        polyline.color = android.graphics.Color.BLUE
+        polyline.width = 5.0f
         mapView.overlays.add(polyline)
 
         // Bắt đầu đếm thời gian
@@ -111,14 +115,17 @@ class DashboardActivity : AppCompatActivity() {
             val newLocation = locationResult.lastLocation
             if (newLocation != null) {
                 val geoPoint = GeoPoint(newLocation.latitude, newLocation.longitude)
+
+                // Cập nhật Marker và đường đi
+                updateMarker(geoPoint)
                 if (lastLocation == null) {
-                    // Nếu lastLocation chưa có giá trị, khởi tạo Marker tại vị trí đầu tiên
                     lastLocation = geoPoint
                     points.add(geoPoint)
-                    addMarker(geoPoint, "Điểm bắt đầu")
                 } else {
-                    updatePath(geoPoint) // Cập nhật đường đi
+                    updatePath(geoPoint)
                 }
+            } else {
+                Toast.makeText(this@DashboardActivity, "Không thể lấy vị trí GPS", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -131,43 +138,44 @@ class DashboardActivity : AppCompatActivity() {
                 val minutes = (seconds % 3600) / 60
                 val secs = seconds % 60
 
-                // Hiển thị thời gian trên TextView
                 tvTimer.text = String.format("Thời gian: %02d:%02d:%02d", hours, minutes, secs)
 
                 if (running) {
                     seconds++
                 }
-                handler.postDelayed(this, 1000) // Cập nhật mỗi giây
+                handler.postDelayed(this, 1000)
             }
         })
     }
 
     private fun updatePath(newPoint: GeoPoint) {
-        // Thêm điểm mới vào danh sách
         points.add(newPoint)
-
-        // Tính khoảng cách giữa điểm mới và điểm trước đó
         lastLocation?.let { last ->
             val distance = haversine(last.latitude, last.longitude, newPoint.latitude, newPoint.longitude)
             totalDistance += distance
         }
-
-        // Cập nhật Polyline với danh sách điểm
         polyline.setPoints(points)
-        mapView.invalidate() // Làm mới MapView
-        lastLocation = newPoint // Cập nhật lastLocation
+        mapView.invalidate()
+        lastLocation = newPoint
     }
 
-    private fun addMarker(location: GeoPoint, title: String) {
-        val marker = Marker(mapView)
-        marker.position = location
-        marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
-        marker.title = title
-        mapView.overlays.add(marker)
+    private fun updateMarker(location: GeoPoint) {
+        if (currentMarker == null) {
+            currentMarker = Marker(mapView).apply {
+                position = location
+                title = "Vị trí hiện tại"
+                setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
+                mapView.overlays.add(this)
+            }
+        } else {
+            currentMarker?.position = location
+        }
+        mapView.controller.setCenter(location)
+        mapView.invalidate()
     }
 
     private fun haversine(lat1: Double, lon1: Double, lat2: Double, lon2: Double): Double {
-        val R = 6371 // Bán kính Trái Đất (km)
+        val R = 6371
         val dLat = Math.toRadians(lat2 - lat1)
         val dLon = Math.toRadians(lon2 - lon1)
         val a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
@@ -178,8 +186,7 @@ class DashboardActivity : AppCompatActivity() {
     }
 
     private fun showSummaryPopup() {
-        val avgSpeed = if (seconds > 0) totalDistance / (seconds / 3600.0) else 0.0 // Tốc độ trung bình (km/h)
-
+        val avgSpeed = if (seconds > 0) totalDistance / (seconds / 3600.0) else 0.0
         AlertDialog.Builder(this)
             .setTitle("Kết quả")
             .setMessage(
@@ -191,7 +198,7 @@ class DashboardActivity : AppCompatActivity() {
             )
             .setPositiveButton("OK") { dialog, _ ->
                 dialog.dismiss()
-                finish() // Quay lại màn hình chính
+                finish()
             }
             .create()
             .show()
