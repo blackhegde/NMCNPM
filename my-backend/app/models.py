@@ -11,8 +11,6 @@ class User(db.Model):
     streak = db.relationship('Streak', backref='user', uselist=False, lazy=True)
     # 1-N achivement
     achievements = db.relationship('Achievement', backref='user', lazy=True)
-    # 1-N ranking
-    rank = db.relationship('Ranking', backref='user', lazy=True)
 
 class Activity(db.Model):
     id = db.Column(db.Integer, primary_key=True)
