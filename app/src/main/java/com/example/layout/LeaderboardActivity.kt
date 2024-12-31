@@ -8,7 +8,8 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.layout.model.User
+import com.example.layout.LeaderboardAdapter
+import com.example.layout.User
 
 class LeaderboardActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
