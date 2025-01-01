@@ -23,7 +23,7 @@
             android:layout_height="48dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:src="@drawable/home"
-            android:scaleType="centerCrop"
+            android:scaleType=""
             android:contentDescription="Home"/>
 
         <!-- Text User -->
