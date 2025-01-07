@@ -3,7 +3,7 @@ from flask import request, jsonify
 from sqlalchemy import func
 from app import app, db
 from app.models import Activity, Streak, Achievement, User
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 
 # create activity
@@ -66,7 +66,7 @@ def get_recent_activities():
 def update_streak():
     data = request.json
     user_id = data['user_id']
-    today = datetime.datetime.now(datetime.UTC)
+    today = datetime.now(timezone.utc)
 
     #lay streak hien tai
     streak = Streak.query.filter_by(user_id=user_id).first()
