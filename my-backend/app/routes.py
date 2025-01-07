@@ -66,7 +66,7 @@ def get_recent_activities():
 def update_streak():
     data = request.json
     user_id = data['user_id']
-    today = datetime.now(datetime.UTC)
+    today = datetime.now(datetime.timezone.UTC)
 
     #lay streak hien tai
     streak = Streak.query.filter_by(user_id=user_id).first()
