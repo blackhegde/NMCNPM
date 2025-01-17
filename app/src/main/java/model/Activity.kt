@@ -1,7 +1,5 @@
 package model
 
-import java.util.Date
-
 data class Activity(
     val id: Int,
     val user_id: Int,
@@ -10,6 +8,6 @@ data class Activity(
     val duration: Int, //in second
     val average_speed: Float,
     val gps_data: String,
-    val start_time: Date,
-    val end_time: Date
+    val start_time: String,
+    val end_time: String
     )

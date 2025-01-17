@@ -25,7 +25,8 @@ import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.Marker
 import org.osmdroid.views.overlay.Polyline
-import java.util.Date
+import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
 
 @Suppress("DEPRECATION")
 class DashboardActivity : AppCompatActivity() {
@@ -116,6 +117,9 @@ class DashboardActivity : AppCompatActivity() {
             running = false
             // Tạo biến Activity từ dữ liệu hiện tại
             val gpsData = GpsData(points)
+            val startTime = ZonedDateTime.now()
+            val endTime = ZonedDateTime.now()
+            val formatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME
             val activity = Activity(
                 id = 0, // Server sẽ tự tạo ID
                 user_id = 1, // ID người dùng hiện tại, bạn cần lấy từ phiên đăng nhập hoặc một nguồn khác
@@ -124,8 +128,8 @@ class DashboardActivity : AppCompatActivity() {
                 duration = seconds,
                 average_speed = (totalDistance / (seconds / 3600.0)).toFloat(),
                 gps_data = gpsData.toJson(),
-                start_time = Date(), // startTime cần được lưu từ khi bắt đầu hoạt động
-                end_time = Date() // Thời gian hiện tại
+                start_time = startTime.format(formatter), // startTime cần được lưu từ khi bắt đầu hoạt động
+                end_time = endTime.format(formatter) // Thời gian hiện tại
             )
 
             // Gọi hàm lưu hoạt động lên server
