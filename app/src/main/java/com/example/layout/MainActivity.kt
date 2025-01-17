@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             // Xử lý sự kiện nhấn nút Start
-            val btnStart = findViewById<ImageButton>(R.id.btnStart)
+            val btnStart = findViewById<Button>(R.id.btnStart)
             btnStart.setOnClickListener {
                 showModeSelectionDialog()
             }

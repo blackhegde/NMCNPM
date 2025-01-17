@@ -3,8 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/white"
+    android:orientation="vertical"
+    android:padding="0dp"
     tools:context=".UserActivity">
 
     <!-- Tiêu đề -->
@@ -21,10 +22,9 @@
             android:id="@+id/btnHome"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:src="@drawable/home"
-            android:scaleType=""
-            android:contentDescription="Home"/>
+            android:background="#FFFFFF"
+            android:contentDescription="Home"
+            android:src="@drawable/home" />
 
         <!-- Text User -->
         <TextView
@@ -84,12 +84,11 @@
             </LinearLayout>
         </LinearLayout>
 
-        <LinearLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:paddingTop="16dp">
 
             <!-- Tiêu đề -->
             <TextView
@@ -100,8 +99,8 @@
                 android:layout_marginBottom="10dp"
                 android:gravity="center"
                 android:text="OVERALL"
-                android:textStyle="bold"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
             <!-- Khung Tổng Quan -->
             <GridLayout
@@ -297,10 +296,9 @@
 
         <!-- Các chỉ số đã đạt được -->
         <LinearLayout
-            android:layout_width="379dp"
+            android:layout_width="match_parent"
             android:layout_height="407dp"
             android:layout_marginTop="24dp"
-            android:background="@drawable/border_gray"
             android:orientation="vertical">
 
             <TextView
@@ -314,10 +312,12 @@
                 android:textStyle="bold" />
 
             <ImageView
-                android:layout_width="395dp"
+                android:layout_width="match_parent"
                 android:layout_height="212dp"
                 android:layout_marginTop="8dp"
+                android:background="@drawable/border_gray"
                 android:contentDescription="Route Map"
+                android:padding="12dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/ic_launcher_background" />
 
@@ -327,19 +327,18 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:orientation="horizontal"
-        android:background="@color/design_default_color_on_primary"
-        android:gravity="center">
+        android:gravity="center"
+        android:orientation="horizontal">
 
         <!-- Icon Bảng xếp hạng -->
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical"
             android:clickable="true"
             android:focusable="true"
+            android:gravity="center"
+            android:orientation="vertical"
             android:padding="8dp">
 
             <ImageView
@@ -355,10 +354,10 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical"
             android:clickable="true"
             android:focusable="true"
+            android:gravity="center"
+            android:orientation="vertical"
             android:padding="8dp">
 
             <TextView
@@ -375,17 +374,17 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical"
             android:clickable="true"
             android:focusable="true"
+            android:gravity="center"
+            android:orientation="vertical"
             android:padding="8dp">
 
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/statistic"
-                android:contentDescription="Personal Info Icon" />
+                android:contentDescription="Personal Info Icon"
+                android:src="@drawable/statistic" />
 
 
         </LinearLayout>
