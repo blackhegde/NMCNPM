@@ -2,8 +2,7 @@ package model
 
 data class GpsPoint (
     val latitude : Double,
-    val longtitude : Double,
-    val timestamp : Long
+    val longtitude : Double
 )
 
 data class GpsData(
