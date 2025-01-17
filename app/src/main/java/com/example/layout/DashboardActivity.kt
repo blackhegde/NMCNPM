@@ -5,6 +5,7 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
@@ -13,11 +14,20 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.gms.location.*
+import model.Activity
+import model.GpsData
+import model.GpsPoint
+import network.ApiClient
+import network.ApiService
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import org.osmdroid.config.Configuration
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.Marker
 import org.osmdroid.views.overlay.Polyline
+import java.util.Date
 import kotlin.math.sqrt
 
 @Suppress("DEPRECATION")
@@ -70,11 +80,60 @@ class DashboardActivity : AppCompatActivity() {
 
         // Bắt đầu đếm thời gian
         runTimer()
+        // Khởi tạo thêm hàm postActivityToServer
+        fun postActivityToServer(activity: Activity) {
+            val apiService = ApiClient.apiService // Khởi tạo ApiService từ ApiClient
+
+            apiService.postActivities(activity.user_id, activity).enqueue(object : Callback<Activity> {
+                override fun onResponse(call: Call<Activity>, response: Response<Activity>) {
+                    if (response.isSuccessful) {
+                        val syncedActivity = response.body()
+                        Toast.makeText(
+                            this@DashboardActivity,
+                            "Hoạt động đã được đồng bộ: ID = ${syncedActivity?.id}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } else {
+                        Log.e("Sync", "Lỗi đồng bộ Activity: ${response.code()}")
+                        Toast.makeText(
+                            this@DashboardActivity,
+                            "Lỗi đồng bộ hoạt động: ${response.message()}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+
+                override fun onFailure(call: Call<Activity>, t: Throwable) {
+                    Log.e("Sync", "Lỗi kết nối khi đồng bộ Activity: ${t.message}")
+                    Toast.makeText(
+                        this@DashboardActivity,
+                        "Lỗi kết nối đến server.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            })
+        }
 
         // Dừng chạy khi nhấn nút Stop
         btnStop.setOnClickListener {
             running = false
+            // Tạo biến Activity từ dữ liệu hiện tại
+            val activity = Activity(
+                id = 0, // Server sẽ tự tạo ID
+                user_id = 1, // ID người dùng hiện tại, bạn cần lấy từ phiên đăng nhập hoặc một nguồn khác
+                type = 1, // Loại hoạt động, giả sử 1 là chạy bộ
+                distance = totalDistance.toFloat(),
+                duration = seconds,
+                average_speed = (totalDistance / (seconds / 3600.0)).toFloat(),
+                gps_data = GpsData(points.map { GpsPoint(it.latitude, it.longitude) }),
+                start_time = Date(), // startTime cần được lưu từ khi bắt đầu hoạt động
+                end_time = Date() // Thời gian hiện tại
+            )
+
+            // Gọi hàm lưu hoạt động lên server
+            postActivityToServer(activity)
             showSummaryPopup()
+
         }
 
         // Khởi tạo FusedLocationProviderClient
