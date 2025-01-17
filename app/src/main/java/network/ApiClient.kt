@@ -5,7 +5,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object ApiClient {
 
-    private const val BASE_URL = "https://your-api-url.com/"  // Địa chỉ API backend
+    private const val BASE_URL = "https://nmcnpm-habit-track.onrender.com"  // Địa chỉ API backend
 
     val retrofit: Retrofit = Retrofit.Builder()
         .baseUrl(BASE_URL)
