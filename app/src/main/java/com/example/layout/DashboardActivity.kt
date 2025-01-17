@@ -16,9 +16,7 @@ import androidx.core.content.ContextCompat
 import com.google.android.gms.location.*
 import model.Activity
 import model.GpsData
-import model.GpsPoint
 import network.ApiClient
-import network.ApiService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -28,7 +26,6 @@ import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.Marker
 import org.osmdroid.views.overlay.Polyline
 import java.util.Date
-import kotlin.math.sqrt
 
 @Suppress("DEPRECATION")
 class DashboardActivity : AppCompatActivity() {
@@ -118,6 +115,7 @@ class DashboardActivity : AppCompatActivity() {
         btnStop.setOnClickListener {
             running = false
             // Tạo biến Activity từ dữ liệu hiện tại
+            val gpsData = GpsData(points)
             val activity = Activity(
                 id = 0, // Server sẽ tự tạo ID
                 user_id = 1, // ID người dùng hiện tại, bạn cần lấy từ phiên đăng nhập hoặc một nguồn khác
@@ -125,7 +123,7 @@ class DashboardActivity : AppCompatActivity() {
                 distance = totalDistance.toFloat(),
                 duration = seconds,
                 average_speed = (totalDistance / (seconds / 3600.0)).toFloat(),
-                gps_data = GpsData(points.map { GpsPoint(it.latitude, it.longitude) }),
+                gps_data = gpsData.toJson(),
                 start_time = Date(), // startTime cần được lưu từ khi bắt đầu hoạt động
                 end_time = Date() // Thời gian hiện tại
             )
