@@ -2,6 +2,7 @@ package com.example.layout
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import androidx.appcompat.app.AlertDialog
@@ -53,7 +54,7 @@ class LeaderboardActivity : AppCompatActivity() {
         }
 
         // Xử lý sự kiện nhấn nút Start
-        val btnStart = findViewById<ImageButton>(R.id.btnStart)
+        val btnStart = findViewById<Button>(R.id.btnStart)
         btnStart.setOnClickListener {
             showModeSelectionDialog()
         }

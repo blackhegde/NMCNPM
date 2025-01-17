@@ -28,12 +28,6 @@
             android:gravity="center"
             android:text="Streak" />
 
-        <ImageView
-            android:id="@+id/imageView7"
-            android:layout_width="122dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            app:srcCompat="@drawable/notification" />
 
         <Button
             android:id="@+id/btnLogout"
@@ -84,8 +78,6 @@
             android:textSize="20sp"
             app:cornerRadius="0dp"
             app:iconPadding="0dp" />
-        <!--            android:scaleType="centerCrop"-->
-        <!--            app:srcCompat="@drawable/start" />-->
 
         <ImageButton
             android:id="@+id/btnStatistic"

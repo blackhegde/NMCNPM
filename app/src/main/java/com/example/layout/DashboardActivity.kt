@@ -82,8 +82,8 @@ class DashboardActivity : AppCompatActivity() {
 
         // Cấu hình yêu cầu vị trí
         locationRequest = LocationRequest.create().apply {
-            interval = 5000 // 5 giây
-            fastestInterval = 2000 // 2 giây
+            interval = 3000 // 5 giây
+            fastestInterval = 1000 // 2 giây
             priority = LocationRequest.PRIORITY_HIGH_ACCURACY
         }
 
