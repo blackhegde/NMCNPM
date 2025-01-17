@@ -81,7 +81,7 @@ class DashboardActivity : AppCompatActivity() {
         fun postActivityToServer(activity: Activity) {
             val apiService = ApiClient.apiService // Khởi tạo ApiService từ ApiClient
 
-            apiService.postActivities(activity.user_id, activity).enqueue(object : Callback<Activity> {
+            apiService.postActivities(activity).enqueue(object : Callback<Activity> {
                 override fun onResponse(call: Call<Activity>, response: Response<Activity>) {
                     if (response.isSuccessful) {
                         val syncedActivity = response.body()

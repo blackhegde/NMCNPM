@@ -35,9 +35,8 @@ interface ApiService {
     fun postUser(@Body user: User): Call<User>
 
     // Tạo activity mới
-    @POST("api/activities/{userId}")
+    @POST("api/activities")
     fun postActivities(
-        @Path("userId") userId: Int,
         @Body activity: Activity
     ): Call<Activity>
 
