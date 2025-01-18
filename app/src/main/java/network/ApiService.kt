@@ -1,9 +1,11 @@
 package network
 
+import com.example.layout.Uuser
 import model.Achievement
 import model.Activity
 import model.Streak
 import model.NewUser
+import model.User
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -32,7 +34,7 @@ interface ApiService {
 
     // Tạo người dùng mới
     @POST("api/user")
-    fun postUser(@Body user: NewUser): Call<NewUser>
+    fun postUser(@Body newUser: NewUser): Call<User>
 
     // Tạo activity mới
     @POST("api/activities")

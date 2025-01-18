@@ -7,7 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class LeaderboardAdapter(private val userList: List<User>) :
+class LeaderboardAdapter(private val userList: List<Uuser>) :
     RecyclerView.Adapter<LeaderboardAdapter.LeaderboardViewHolder>() {
 
     class LeaderboardViewHolder(view: View) : RecyclerView.ViewHolder(view) {
