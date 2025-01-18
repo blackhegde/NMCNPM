@@ -3,10 +3,10 @@ package model
 import com.google.gson.Gson
 import org.osmdroid.util.GeoPoint
 
-data class GpsPoint (
-    val latitude : Double,
-    val longtitude : Double
-)
+//data class GpsPoint (
+//    val latitude : Double,
+//    val longitude : Double
+//)
 
 data class GpsData(
     val points: MutableList<GeoPoint>

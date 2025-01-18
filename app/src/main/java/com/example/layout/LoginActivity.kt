@@ -9,6 +9,11 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
+import model.User
+import network.ApiClient.apiService
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class LoginActivity : AppCompatActivity() {
 
@@ -59,7 +64,10 @@ class LoginActivity : AppCompatActivity() {
                     val user = firebaseAuth.currentUser
                     if (user != null && user.isEmailVerified) {
                         // Đăng nhập thành công
-                        Toast.makeText(this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show()
+                        //GET các thứ các thứ
+                        getUserInfo(email)
+                        //Thông báo đăng nhập thành công và chuyển sang màn hình main
+                        //Toast.makeText(this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show()
                         val intent = Intent(this, MainActivity::class.java)
                         startActivity(intent)
                         finish()
@@ -78,6 +86,61 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
     }
+
+    private fun getUserInfo(email: String) {
+        // Lấy ID từ SharedPreferences
+        val sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE)
+
+        // Gửi yêu cầu đến server để lấy thông tin người dùng
+        apiService.getUser(email).enqueue(object : Callback<User> {
+            override fun onResponse(call: retrofit2.Call<User>, response: Response<User>) {
+                if (response.isSuccessful) {
+                    val user = response.body()
+                    if (user != null) {
+                        val username = user.username
+                        val avatarType = user.avatar_type
+                        val userId = user.id
+
+                        // Lưu thông tin vào SharedPreferences
+                        sharedPreferences.edit().apply {
+                            putString("USERNAME", username)
+                            putInt("AVATAR_TYPE", avatarType)
+                            putInt("USER_ID", userId)
+                            apply()
+                        }
+
+                        // Hiển thị thông báo chào mừng
+                        Toast.makeText(
+                            this@LoginActivity,
+                            "Xin chào, $username! Avatar Type: $avatarType",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } else {
+                        Toast.makeText(
+                            this@LoginActivity,
+                            "Không thể lấy thông tin người dùng.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                } else {
+                    Toast.makeText(
+                        this@LoginActivity,
+                        "Lỗi khi lấy thông tin người dùng: ${response.message()}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+
+            override fun onFailure(call: retrofit2.Call<User>, t: Throwable) {
+                Toast.makeText(
+                    this@LoginActivity,
+                    "Lỗi kết nối đến server: ${t.message}",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        })
+    }
+
 
     private fun showResetPasswordDialog() {
         val builder = AlertDialog.Builder(this)

@@ -85,7 +85,7 @@ class RegisterActivity : AppCompatActivity() {
                                             val user = response.body()
                                             if (user != null) {
                                                 // Lưu ID vào SharedPreferences
-                                                sharedPreferences.edit().putInt("USER_ID", user.id).apply()
+                                                //sharedPreferences.edit().putInt("USER_ID", user.id).apply()
                                                 Toast.makeText(
                                                     this@RegisterActivity,
                                                     "Đăng ký thành công! Kiểm tra email để xác thực tài khoản.",

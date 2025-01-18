@@ -37,8 +37,8 @@ interface ApiService {
     fun postUser(@Body newUser: NewUser): Call<User>
 
     // Lấy thông tin người dùng
-    @GET("api/users/{userId}")
-    fun getUser(@Path("userId") userId: Int): Call<User>
+    @GET("api/users/{username}")
+    fun getUser(@Path("username") username: String): Call<User>
 
     // Tạo activity mới
     @POST("api/activities")
