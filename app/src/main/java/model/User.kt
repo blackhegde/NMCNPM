@@ -1,9 +1,6 @@
 package model
 
-import com.google.android.gms.common.util.Strings
-
-data class User (
-    val username : String,
-    val email : Strings,
-    val avartar_type : Int
+class User (
+    val user : NewUser,
+    val user_id :Int
 )

@@ -3,7 +3,7 @@ package network
 import model.Achievement
 import model.Activity
 import model.Streak
-import model.User
+import model.NewUser
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -13,8 +13,8 @@ import retrofit2.http.Path
 interface ApiService {
 
     // Lấy danh sách người dùng
-    @GET("api/users")
-    fun getUsers(): Call<List<User>>
+//    @GET("api/users")
+//    fun getUsers(): Call<List<NewUser>>
 
     // Lấy danh sách hoạt động của người dùng
     @GET("api/activities/{userId}")
@@ -32,7 +32,7 @@ interface ApiService {
 
     // Tạo người dùng mới
     @POST("api/user")
-    fun postUser(@Body user: User): Call<User>
+    fun postUser(@Body user: NewUser): Call<NewUser>
 
     // Tạo activity mới
     @POST("api/activities")
