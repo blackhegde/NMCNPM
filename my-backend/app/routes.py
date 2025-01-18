@@ -100,10 +100,10 @@ def signup():
     db.session.commit()
     return jsonify({"message": "Sign up successfully"}), 201
 
-#lay thong tin cua mot user qua mail
-@app.route('/api/users/<string:username>', methods=['GET'])
-def get_user(username):
-    user = User.query.filter_by(User.username)
+#lay thong tin cua mot user
+@app.route('/api/users/<int:user_id>', methods=['GET'])
+def get_user(user_id):
+    user = User.query.filter_by(User.user_id)
     return jsonify({
         'user_id': user.user_id,
         'username': user.username,
