@@ -47,8 +47,8 @@ interface ApiService {
     ): Call<Activity>
 
     // Update streak
-    @POST("api/streak")
-    fun updateStreak(@Body streak: Streak): Call<Streak>
+    @POST("api/streak/update/{userId}")
+    fun updateStreak(@Path("userId") userId: Int): Call<Streak>
 
     // Kiểm tra achivement
 }
