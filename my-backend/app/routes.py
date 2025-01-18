@@ -103,12 +103,12 @@ def signup():
 #lay thong tin cua mot user
 @app.route('/api/users/<int:user_id>', methods=['GET'])
 def get_user(user_id):
-    user = User.query.filter_by(User.user_id)
+    user = User.query.filter(User.id == user_id).first()
     return jsonify({
-        'user_id': user.user_id,
+        'user_id': user.id,
         'username': user.username,
         'email': user.email,
-        "avatar_type": user.avatar_type
+        'avatar_type': user.avatar_type
     })
 
 #lay thong tin streak cua mot user
