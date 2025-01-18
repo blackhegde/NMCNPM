@@ -113,9 +113,9 @@ def signup():
     return jsonify({"message": "Sign up successfully"}), 201
 
 #lay thong tin cua mot user
-@app.route('/api/users/<int:user_id>', methods=['GET'])
-def get_user(user_id):
-    user = User.query.filter(User.id == user_id).first()
+@app.route('/api/users/<string:username>', methods=['GET'])
+def get_user(username):
+    user = User.query.filter(User.username == username).first()
     return jsonify({
         'user_id': user.id,
         'username': user.username,
