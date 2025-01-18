@@ -63,7 +63,7 @@ def get_recent_activities():
 
 @app.route('/api/streak/update/<int:user_id>', methods=['POST'])
 def update_streak(user_id):
-    today = datetime.now(timezone.utc).date()  # Chỉ lấy ngày, không lấy giờ
+    today = datetime.now(timezone.utc)  # Chỉ lấy ngày, không lấy giờ
 
     # Lấy streak hiện tại
     streak = Streak.query.filter_by(user_id=user_id).first()
