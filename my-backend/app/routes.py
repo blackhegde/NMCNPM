@@ -61,29 +61,41 @@ def get_recent_activities():
     #chuyen ket qua thanh json
     return jsonify(activities_list)
 
-#update streak
-@app.route('/api/streak', methods=['POST'])
-def update_streak():
-    data = request.json
-    user_id = data['user_id']
-    today = datetime.now(timezone.utc_plus_7)
+@app.route('/api/streak/update/<int:user_id>', methods=['POST'])
+def update_streak(user_id):
+    today = datetime.now(timezone.utc).date()  # Chỉ lấy ngày, không lấy giờ
 
-    #lay streak hien tai
+    # Lấy streak hiện tại
     streak = Streak.query.filter_by(user_id=user_id).first()
+
     if not streak:
-        #tao moi neu chua co
-        streak = Streak(user_id=user_id, start_date=today, streak_days=1)
+        # Tạo streak mới nếu chưa có
+        streak = Streak(user_id=user_id, start_date=today, end_date=today, streak_days=1, is_active=True)
         db.session.add(streak)
     else:
-        #cap nhat streak hien tai
         if streak.is_active:
-            if streak.end_date and streak.end_date.date() < today - timedelta(days=1):
+            # Kiểm tra nếu streak đã kết thúc
+            if streak.end_date and streak.end_date < today - timedelta(days=1):
                 streak.is_active = False  # Kết thúc streak
-            elif streak.end_date and streak.end_date.date() == today - timedelta(days=1):
+            # Kiểm tra nếu streak vẫn hoạt động và end_date là ngày hôm qua
+            elif streak.end_date == today - timedelta(days=1):
                 streak.streak_days += 1  # Tăng ngày streak
-                streak.end_date = today
-            else:
+                streak.end_date = today  # Cập nhật ngày kết thúc
+            # Kiểm tra nếu streak đã được cập nhật trong ngày hôm nay
+            elif streak.end_date == today:
                 return jsonify({'message': 'Streak already updated for today'}), 200
+            else:
+                # Nếu end_date là None hoặc không hợp lệ, bắt đầu streak mới
+                streak.start_date = today
+                streak.end_date = today
+                streak.streak_days = 1
+        else:
+            # Nếu streak không hoạt động, bắt đầu streak mới
+            streak.start_date = today
+            streak.end_date = today
+            streak.streak_days = 1
+            streak.is_active = True
+
     db.session.commit()
     return jsonify({'message': 'Streak updated successfully', 'streak_days': streak.streak_days}), 200
 
@@ -114,7 +126,7 @@ def get_user(user_id):
 #lay thong tin streak cua mot user
 @app.route('/api/streak/<int:user_id>', methods=['GET'])
 def get_streak(user_id):
-    streak = Streak.query.filter_by(Streak.user_id)
+    streak = Streak.query.filter(Streak.user_id == user_id).first()
     return jsonify({
         'id': streak.id,
         'user_id': streak.user_id,
@@ -174,8 +186,11 @@ def get_top_streaks():
             Streak.streak_days,
             Streak.start_date,
             Streak.end_date,
-            Streak.is_active
+            Streak.is_active,
+            User.username,
+            User.avatar_type
         )
+        .join(User, Streak.user_id == User.id)
         .order_by(Streak.streak_days.desc())  
         .limit(50)  
         .all()
@@ -185,6 +200,8 @@ def get_top_streaks():
         {
             'rank': idx + 1,  
             'user_id': row.user_id,
+            'username': row.username,
+            'avatar_type': row.avatar_type,
             'streak_days': row.streak_days,
             'start_date': row.start_date,
             'end_date': row.end_date,
