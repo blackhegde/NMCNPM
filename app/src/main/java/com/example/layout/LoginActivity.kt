@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
+import model.Streak
 import model.User
 import network.ApiClient.apiService
 import retrofit2.Call
@@ -66,8 +67,9 @@ class LoginActivity : AppCompatActivity() {
                         // Đăng nhập thành công
                         //GET các thứ các thứ
                         getUserInfo(email)
+                        getStreak()
                         //Thông báo đăng nhập thành công và chuyển sang màn hình main
-                        //Toast.makeText(this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show()
                         val intent = Intent(this, MainActivity::class.java)
                         startActivity(intent)
                         finish()
@@ -141,6 +143,36 @@ class LoginActivity : AppCompatActivity() {
         })
     }
 
+    //cập nhật streak
+    private fun getStreak() {
+        val sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE)
+        val userId = sharedPreferences.getInt("USER_ID", -1)
+
+        // Kiểm tra nếu userId không hợp lệ
+        if (userId == -1) {
+            return // Dừng thực hiện nếu không tìm thấy userId
+        }
+
+        // Gửi yêu cầu lấy streak từ server
+        apiService.getStreak(userId).enqueue(object : Callback<Streak> {
+            override fun onResponse(call: Call<Streak>, response: Response<Streak>) {
+                if (response.isSuccessful) {
+                    val streak = response.body()
+                    val count = streak?.count ?: 0 // Sử dụng giá trị mặc định nếu count là null
+
+                    // Lưu thông tin streak vào SharedPreferences
+                    sharedPreferences.edit().apply {
+                        putInt("STREAK_COUNT", count)
+                        apply()
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<Streak>, t: Throwable) {
+                // Không cần xử lý thêm logic, có thể ghi log nếu cần
+            }
+        })
+    }
 
     private fun showResetPasswordDialog() {
         val builder = AlertDialog.Builder(this)
