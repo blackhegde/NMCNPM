@@ -66,7 +66,7 @@ def get_recent_activities():
 def update_streak():
     data = request.json
     user_id = data['user_id']
-    today = datetime.now(timezone.utc)
+    today = datetime.now(timezone.utc_plus_7)
 
     #lay streak hien tai
     streak = Streak.query.filter_by(user_id=user_id).first()
@@ -99,6 +99,17 @@ def signup():
     db.session.add(new_user)
     db.session.commit()
     return jsonify({"message": "Sign up successfully"}), 201
+
+#lay thong tin cua mot user qua mail
+@app.route('api/users/<string:username>', methods=['GET'])
+def get_user(username):
+    user = User.query.filter_by(User.username)
+    return jsonify({
+        'user_id': user.user_id,
+        'username': user.username,
+        'email': user.email,
+        "avatar_type": user.avatar_type
+    })
 
 #lay thong tin streak cua mot user
 @app.route('/api/streak/<int:user_id>', methods=['GET'])
