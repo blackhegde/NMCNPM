@@ -16,7 +16,10 @@ import androidx.core.content.ContextCompat
 import com.google.android.gms.location.*
 import model.Activity
 import model.GpsData
+import model.Streak
+import model.User
 import network.ApiClient
+import network.ApiClient.apiService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -115,6 +118,8 @@ class DashboardActivity : AppCompatActivity() {
         // Dừng chạy khi nhấn nút Stop
         btnStop.setOnClickListener {
             running = false
+            // Lấy id ng dùng từ share preferences
+            val sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE)
             // Tạo biến Activity từ dữ liệu hiện tại
             val gpsData = GpsData(points)
             val startTime = ZonedDateTime.now()
@@ -122,7 +127,7 @@ class DashboardActivity : AppCompatActivity() {
             val formatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME
             val activity = Activity(
                 id = 0, // Server sẽ tự tạo ID
-                user_id = 1, // ID người dùng hiện tại, bạn cần lấy từ phiên đăng nhập hoặc một nguồn khác
+                user_id = sharedPreferences.getInt("USER_ID", -1), // ID người dùng hiện tại, bạn cần lấy từ phiên đăng nhập hoặc một nguồn khác
                 type = 1, // Loại hoạt động, giả sử 1 là chạy bộ
                 distance = totalDistance.toFloat(),
                 duration = seconds,
@@ -136,6 +141,29 @@ class DashboardActivity : AppCompatActivity() {
             postActivityToServer(activity)
             showSummaryPopup()
 
+            // Cập nhật Streak
+            apiService.updateStreak(activity.user_id).enqueue(object : Callback<Streak> {
+                override fun onResponse(call: retrofit2.Call<Streak>, response: Response<Streak>) {
+                    if (response.isSuccessful) {
+                        val streak = response.body()
+                        val count = streak?.count
+
+                        sharedPreferences.edit().apply {
+                            if (count != null) {
+                                putInt("STREAK", count)
+                            }
+                            apply()
+                        }
+                    }
+                }
+                override fun onFailure(call: Call<Streak>, t: Throwable) {
+                    Toast.makeText(
+                        this@DashboardActivity,
+                        "Lỗi kết nối đến server: ${t.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            })
         }
 
         // Khởi tạo FusedLocationProviderClient
